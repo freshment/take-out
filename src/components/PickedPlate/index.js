@@ -1,15 +1,38 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View, Image} from 'react-native';
 import style from './style';
 import WholeHambuerge from './WholeHambuerge';
+import {positionList} from '../../mock/plate-list';
 
-const PickedPlate = () => {
+const PickedPlate = ({pickedList}) => {
+  console.log('pickedL', pickedList);
+  const plateList = useMemo(() => {
+    return pickedList.map(item => {
+      const positionData = positionList[item.foodName];
+      return {
+        ...item,
+        ...positionData,
+      };
+    });
+  }, [pickedList]);
+
   return (
     <View style={style.pickedPlateContainer}>
       <View style={style.pickedFoodWrapper}>
-        <View style={style.mainFoodItem}>
+        {plateList.map(item =>
+          item.foodName === 'BURGER' ? (
+            <View style={style[item.viewStyleName]} key={item.foodName}>
+              <WholeHambuerge />
+            </View>
+          ) : (
+            <View style={style[item.viewStyleName]} key={item.foodName}>
+              <Image style={style[item.imgStyleName]} source={item.source} />
+            </View>
+          ),
+        )}
+        {/* <View style={style.mainFoodItem}>
           <WholeHambuerge />
-        </View>
+        </View>        
         <View style={style.drinksItem}>
           <Image
             style={style.coffee}
@@ -21,7 +44,7 @@ const PickedPlate = () => {
             style={style.snack}
             source={require('../../assets/images/picked-chips.png')}
           />
-        </View>
+        </View> */}
       </View>
       <View>
         <Image

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {scaleSize, deviceHeight, isAndroid} from '../utils/calc';
 import LinearGradient from 'react-native-linear-gradient';
@@ -11,6 +11,19 @@ import OrderSummary from '../components/OrderSummary';
 import navList from '../mock/nav-data';
 
 const Home = () => {
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [pickedList, setPickedList] = useState([])
+
+  const handleAddFoodItem = useCallback(
+    foodData => {
+      console.log('add', foodData);
+      const {price} = foodData;
+      setTotalPrice(totalPrice + Number(price));
+      setPickedList([].concat(pickedList, foodData));
+    },
+    [totalPrice, pickedList],
+  );
+
   return (
     <View style={style.homeContainer}>
       <ScrollView>
@@ -20,16 +33,16 @@ const Home = () => {
           start={{x: 0, y: 0.8}}
           end={{x: 0, y: 1}}>
           <NavHeader navList={navList} />
-          <FoodSwiper />
+          <FoodSwiper handleAddFoodItem={handleAddFoodItem} />
           <View style={style.separator} />
-          <PickedPlate />
+          <PickedPlate pickedList={pickedList} />
         </LinearGradient>
       </ScrollView>
       <View style={style.stickBottom}>
         <View>
           <ContactShop />
         </View>
-        <OrderSummary />
+        <OrderSummary totalPrice={totalPrice} />
       </View>
     </View>
   );

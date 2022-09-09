@@ -3,6 +3,7 @@ import {scaleSize, setSpText} from '../../utils/calc';
 
 export default StyleSheet.create({
   foodSwiperContainer: {
+    flex: 1,
     height: scaleSize(572),
   },
   foodItemWrapper: {
@@ -69,14 +70,5 @@ export default StyleSheet.create({
   foodPrice: {
     fontSize: setSpText(48),
     color: '#EB5C77',
-  },
-  foodAction: {
-    position: 'absolute',
-    top: scaleSize(356),
-    right: scaleSize(40),
-  },
-  iconPlus: {
-    width: scaleSize(180),
-    height: scaleSize(180),
   },
 });

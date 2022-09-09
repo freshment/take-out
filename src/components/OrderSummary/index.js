@@ -3,12 +3,12 @@ import {View, StyleSheet, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {scaleSize, setSpText} from '../../utils/calc';
 
-const OrderSummary = () => {
+const OrderSummary = ({totalPrice}) => {
   return (
     <View style={style.orderSummaryContainer}>
       <View style={style.priceWrapper}>
-        <Text style={{...style.price, ...style.totalPrice}}>13</Text>
-        <Text style={{...style.price, ...style.priceSymbol}}>$</Text>
+        <Text style={[style.price, style.totalPrice]}>{totalPrice}</Text>
+        <Text style={[style.price, style.priceSymbol]}>$</Text>
       </View>
       <LinearGradient colors={['#FF5D79', '#FD003C']}>
         <View style={style.payButton}>

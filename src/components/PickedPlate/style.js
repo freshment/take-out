@@ -35,6 +35,7 @@ export default StyleSheet.create({
     position: 'absolute',
     left: scaleSize(4),
     bottom: scaleSize(-154),
+    zIndex: 2,
   },
   snack: {
     width: scaleSize(188),
