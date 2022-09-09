@@ -26,12 +26,3 @@ export const scaleSize = size => {
   const scaleWidth = (size * screenPxW) / 750;
   return Math.round(scaleWidth / pixelRatio + 0.5);
 };
-
-// usage
-// const styles = StyleSheet.create({
-//   imgdesc:{
-//     fontSize: setSpText(20),
-//     color: "#999",
-//     marginTop: scaleSizeW(16)
-//   }
-// })
