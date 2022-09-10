@@ -61,9 +61,8 @@ npm run bundle-ios // output assets.
 ## Summary and reflection
 * I spent a lot of time at setting up and packing.
 * During the development, I found that Native development mode is quite different from Web development mode. For example: style, tag, animation implementation, and time binding events, etc. Besides, learned React is easy to get started with coding.
-* Some problems were encounrtered during the development process: (1) The loop attribute of Swiper plugins have some bug; (2) The gradient config is not familiar; (3) Some animation don't encapsulate not well by myself;
+* Some problems were encounrtered during the development process: (1) The loop attribute of Swiper plugins have some bug; (2) The gradient config is not familiar, thus, I didn't get the shadow effect right; (3) Some animation don't encapsulate not well by myself;
 * In short, through this project, I have a good understanding of react-native and native development.
-
 
 
 ### Thanks for ur reading. I would be greatful if u make some suggestions to me.
