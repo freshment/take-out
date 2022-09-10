@@ -12,14 +12,15 @@ import navList from '../mock/nav-data';
 
 const Home = () => {
   const [totalPrice, setTotalPrice] = useState(0);
-  const [pickedList, setPickedList] = useState([])
+  const [pickedList, setPickedList] = useState([]);
 
   const handleAddFoodItem = useCallback(
     foodData => {
-      console.log('add', foodData);
-      const {price} = foodData;
-      setTotalPrice(totalPrice + Number(price));
-      setPickedList([].concat(pickedList, foodData));
+      if (!pickedList.find(picked => picked.id === foodData.id)) {
+        const {price} = foodData;
+        setTotalPrice(totalPrice + Number(price));
+        setPickedList([].concat(pickedList, foodData));
+      }
     },
     [totalPrice, pickedList],
   );

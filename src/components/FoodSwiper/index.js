@@ -30,6 +30,8 @@ const FoodSwiper = ({handleAddFoodItem}) => {
     <View style={style.foodSwiperContainer}>
       <SurroundStar isDisplay={isShowInfo} />
       <Swiper
+        index={swiperIndex}
+        loop={false}
         showsPagination={false}
         onIndexChanged={handleIndexChanged}
         onScrollBeginDrag={handleScrollBegin}

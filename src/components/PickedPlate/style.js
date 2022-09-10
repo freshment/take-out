@@ -17,28 +17,4 @@ export default StyleSheet.create({
   pickedFoodWrapper: {
     zIndex: 2,
   },
-  mainFoodItem: {
-    position: 'absolute',
-    left: scaleSize(-180),
-    bottom: scaleSize(44),
-  },
-  drinksItem: {
-    position: 'absolute',
-    left: scaleSize(-90),
-    bottom: scaleSize(-90),
-  },
-  coffee: {
-    width: scaleSize(256),
-    height: scaleSize(256),
-  },
-  snackItem: {
-    position: 'absolute',
-    left: scaleSize(4),
-    bottom: scaleSize(-154),
-    zIndex: 2,
-  },
-  snack: {
-    width: scaleSize(188),
-    height: scaleSize(188),
-  },
 });

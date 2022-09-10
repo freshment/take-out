@@ -1,10 +1,28 @@
-import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {Animated, Image, StyleSheet} from 'react-native';
 import {scaleSize} from '../../utils/calc';
+import {useJumpToPlaceAnim} from '../../hooks/animas';
 
-const WholeHambuerge = () => {
+const WholeHambuerge = ({data}) => {
+  const {startX, startY, endX, endY, duration} = data;
+  const {scaleAnim, leftAnim, topAnim, from} = useJumpToPlaceAnim(
+    {
+      startX,
+      startY,
+    },
+    duration,
+  );
+
+  useEffect(() => {
+    from({endX, endY});
+  }, [endX, endY, from]);
+
   return (
-    <View style={style.container}>
+    <Animated.View
+      style={[
+        style.mainFoodItem,
+        {transform: [{scale: scaleAnim}], left: leftAnim, top: topAnim},
+      ]}>
       <Image
         style={style.topHalf}
         source={require('../../assets/images/food-topHamburger.png')}
@@ -13,13 +31,15 @@ const WholeHambuerge = () => {
         style={style.botHalf}
         source={require('../../assets/images/food-botHamburger.png')}
       />
-    </View>
+    </Animated.View>
   );
 };
 
 const style = StyleSheet.create({
-  container: {
-    position: 'relative',
+  mainFoodItem: {
+    position: 'absolute',
+    left: scaleSize(-180),
+    bottom: scaleSize(44),
   },
   topHalf: {
     width: scaleSize(150),

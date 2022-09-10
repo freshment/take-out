@@ -1,12 +1,12 @@
 import {useRef, useCallback} from 'react';
 import {Animated} from 'react-native';
 import {scaleSize} from '../utils/calc';
-import {positionList, positionMap} from '../mock/star-surround';
 
 // fade in & out Animation Hooks
 export const useFadeInOut = duration => {
   const fadeAnim = useRef(new Animated.Value(0), []).current;
   const _duration = duration || 300;
+
   const fadeIn = useCallback(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -63,61 +63,36 @@ export const useFadeUpDown = duration => {
   return {translateYAnim, fadeAnim, entry, exit};
 };
 
-// surround star Animation
-export const useSurroundAnim = (initPosition, duration) => {
-  const {x, y} = initPosition;
-  const leftAnim = useRef(new Animated.Value(0), []).current;
-  const topAnim = useRef(new Animated.Value(0), []).current;
-  const fadeAnim = useRef(new Animated.Value(0), []).current;
+// surround star Animation && plate food Animation
+export const useJumpToPlaceAnim = (data, duration) => {
+  const {startX, startY} = data;
+  const scaleAnim = useRef(new Animated.Value(0), []).current;
+  const leftAnim = useRef(new Animated.Value(startX), []).current;
+  const topAnim = useRef(new Animated.Value(startY), []).current;
   const _duration = duration || 300;
 
-  const from = useCallback(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: _duration,
-        useNativeDriver: true,
-      }),
-      Animated.timing(leftAnim, {
-        toValue: x,
-        duration: _duration,
-        useNativeDriver: true,
-      }),
-      Animated.timing(topAnim, {
-        toValue: y,
-        duration: _duration,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, [x, y, leftAnim, topAnim, fadeAnim, _duration]);
+  const from = useCallback(
+    ({endX, endY}) => {
+      Animated.parallel([
+        Animated.timing(scaleAnim, {
+          toValue: 1,
+          duration: _duration,
+          useNativeDriver: false,
+        }),
+        Animated.timing(leftAnim, {
+          toValue: endX,
+          duration: _duration,
+          useNativeDriver: false,
+        }),
+        Animated.timing(topAnim, {
+          toValue: endY,
+          duration: _duration,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    },
+    [scaleAnim, leftAnim, topAnim, _duration],
+  );
 
-  const to = useCallback(() => {
-    const newPosition = getNewPosition(x, y);
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 0.5,
-        duration: _duration,
-        useNativeDriver: true,
-      }),
-      Animated.timing(leftAnim, {
-        toValue: newPosition.x,
-        duration: _duration,
-        useNativeDriver: true,
-      }),
-      Animated.timing(topAnim, {
-        toValue: newPosition.y,
-        duration: _duration,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, [x, y, leftAnim, topAnim, fadeAnim, _duration, getNewPosition]);
-
-  const getNewPosition = useCallback((x, y) => {
-    const currentIndex = positionList.findIndex(
-      position => position.x === x && position.y === y,
-    );
-    return positionList[positionMap[currentIndex]];
-  }, []);
-
-  return {leftAnim, topAnim, fadeAnim, from, to};
+  return {scaleAnim, leftAnim, topAnim, from};
 };

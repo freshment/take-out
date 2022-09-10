@@ -1,11 +1,12 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {View, Image} from 'react-native';
 import style from './style';
 import WholeHambuerge from './WholeHambuerge';
+import Latte from './Latte';
+import Chips from './Chips';
 import {positionList} from '../../mock/plate-list';
 
 const PickedPlate = ({pickedList}) => {
-  console.log('pickedL', pickedList);
   const plateList = useMemo(() => {
     return pickedList.map(item => {
       const positionData = positionList[item.foodName];
@@ -16,35 +17,23 @@ const PickedPlate = ({pickedList}) => {
     });
   }, [pickedList]);
 
+  const getPlateFoodItem = useCallback(item => {
+    switch (item.foodName) {
+      case 'BURGER':
+        return <WholeHambuerge key={item.foodName} data={item} />;
+      case 'LATTE':
+        return <Latte key={item.foodName} data={item} />;
+      case 'FRIES':
+        return <Chips key={item.foodName} data={item} />;
+      default:
+        return null;
+    }
+  }, []);
+
   return (
     <View style={style.pickedPlateContainer}>
       <View style={style.pickedFoodWrapper}>
-        {plateList.map(item =>
-          item.foodName === 'BURGER' ? (
-            <View style={style[item.viewStyleName]} key={item.foodName}>
-              <WholeHambuerge />
-            </View>
-          ) : (
-            <View style={style[item.viewStyleName]} key={item.foodName}>
-              <Image style={style[item.imgStyleName]} source={item.source} />
-            </View>
-          ),
-        )}
-        {/* <View style={style.mainFoodItem}>
-          <WholeHambuerge />
-        </View>        
-        <View style={style.drinksItem}>
-          <Image
-            style={style.coffee}
-            source={require('../../assets/images/picked-coffe.png')}
-          />
-        </View>
-        <View style={style.snackItem}>
-          <Image
-            style={style.snack}
-            source={require('../../assets/images/picked-chips.png')}
-          />
-        </View> */}
+        {plateList.map(item => getPlateFoodItem(item))}
       </View>
       <View>
         <Image
