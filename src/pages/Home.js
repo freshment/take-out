@@ -7,12 +7,14 @@ import FoodSwiper from '../components/FoodSwiper';
 import PickedPlate from '../components/PickedPlate';
 import ContactShop from '../components/ContactShop';
 import OrderSummary from '../components/OrderSummary';
+import {useToast} from 'react-native-toast-notifications';
 // import data
 import navList from '../mock/nav-data';
 
 const Home = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [pickedList, setPickedList] = useState([]);
+  const toast = useToast();
 
   const handleAddFoodItem = useCallback(
     foodData => {
@@ -20,9 +22,11 @@ const Home = () => {
         const {price} = foodData;
         setTotalPrice(totalPrice + Number(price));
         setPickedList([].concat(pickedList, foodData));
+      } else {
+        toast.show(`You‘ve chosen the ${foodData.foodName}`);
       }
     },
-    [totalPrice, pickedList],
+    [totalPrice, pickedList, toast],
   );
 
   return (

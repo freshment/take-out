@@ -6,6 +6,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {ToastProvider} from 'react-native-toast-notifications';
 import {deviceHeight} from './utils/calc';
 import Home from './pages/Home';
 
@@ -17,15 +18,17 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={{minHeight: deviceHeight, ...backgroundStyle}}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView>
-        <Home />
-      </ScrollView>
-    </SafeAreaView>
+    <ToastProvider>
+      <SafeAreaView style={{minHeight: deviceHeight, ...backgroundStyle}}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <ScrollView>
+          <Home />
+        </ScrollView>
+      </SafeAreaView>
+    </ToastProvider>
   );
 };
 
