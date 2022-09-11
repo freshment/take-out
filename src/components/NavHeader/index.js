@@ -6,7 +6,7 @@ import {getShadowOpt} from '../../mock/shadowOpts';
 import style from './style';
 
 const NavHeader = ({navList}) => {
-  const shadowOpt = getShadowOpt({width: 750, height: 146});
+  const shadowOpt = getShadowOpt({width: 750, height: 146, opacity: 0.1});
   return (
     <BoxShadow setting={shadowOpt}>
       <View style={style.headerWrapper}>
